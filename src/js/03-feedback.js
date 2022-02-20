@@ -1,12 +1,13 @@
 import throttle from 'lodash.throttle';
-const Refs ={
-formRef: document.querySelector('.feedback-form'),
-};
+
+const formRef = document.querySelector('.feedback-form');
+
 
 const STORAGE_KEY = 'feedback-form-state';
+
 let formData={};
-Refs.formRef.addEventListener('input',throttle(onContentInput,500));
-Refs.formRef.addEventListener('submit', onFormSubmit);
+formRef.addEventListener('input',throttle(onContentInput,500));
+formRef.addEventListener('submit', onFormSubmit);
 
 populateForm();
 
@@ -24,12 +25,13 @@ function onFormSubmit(event) {
     event.target.reset();
     localStorage.removeItem(STORAGE_KEY); 
 };
+
 function populateForm(){
  let formData = localStorage.getItem(STORAGE_KEY);
     if (formData) {
         formData = JSON.parse(formData);
         Object.entries(formData).forEach(
-          ([name, value]) => (Refs.formRef.elements[name].value = value),
+          ([name, value]) => (formRef.elements[name].value = value),
         );
       }
 }
