@@ -12,7 +12,8 @@ formRef.addEventListener('submit', onFormSubmit);
 populateForm();
 
 function onContentInput (event){
-    
+    formData = localStorage.getItem(STORAGE_KEY);
+    formData = formData ? JSON.parse(formData) : {};
     formData[event.target.name] = event.target.value;
 //console.log(formData);
 localStorage.setItem(STORAGE_KEY,JSON.stringify(formData));
