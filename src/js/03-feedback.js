@@ -12,21 +12,23 @@ formRef.addEventListener('submit', onFormSubmit);
 populateForm();
 
 function onContentInput (event){
-    formData = localStorage.getItem(STORAGE_KEY);
-    formData = formData ? JSON.parse(formData) : {};
+    let localStorageValue = localStorage.getItem(STORAGE_KEY);
+    if(!localStorageValue ){localStorage.setItem(STORAGE_KEY,JSON.stringify(formData));}
+    else{formData = JSON.parse(localStorage.getItem(STORAGE_KEY));  
     formData[event.target.name] = event.target.value;
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(formData))
 //console.log(formData);
-localStorage.setItem(STORAGE_KEY,JSON.stringify(formData));
+};
 }
+
 
 
 function onFormSubmit(event) {
     event.preventDefault();
-    console.log(formData);
     event.target.reset();
-    localStorage.removeItem(STORAGE_KEY); 
+    localStorage.removeItem(STORAGE_KEY);
+    console.log(formData);
 };
-
 function populateForm(){
  let formData = localStorage.getItem(STORAGE_KEY);
     if (formData) {
