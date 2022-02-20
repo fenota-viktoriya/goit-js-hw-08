@@ -12,11 +12,12 @@ let currentTimePlay = 0;
 const STORAGE_KEY = 'videoplayer-current-time';
 
 //вешаем слушателя по событию и отложенною колбэк функцию
-player.on('play', throttle((onPlay),1000));
+player.on('timeupdate', throttle((onPlay),1000));
 //возвращаем текущее время с хранилища после перезагрузки стриницы
-setCurrentTime();
+//setCurrentTime();
 
 //колбэк функция
+/*
 function onPlay(data){
 
 currentTimePlay = data.seconds;
@@ -29,4 +30,18 @@ localStorage.setItem(STORAGE_KEY, currentTimePlay);
     if(setTime){
         player.setCurrentTime(setTime);
     }
- }
+ }*/
+function onPlay(){
+
+   currentTimePlay =  player.getCurrentTime().then(function(seconds){
+        seconds = player.getCurrentTime;
+     }).catch(function(error){
+return error;
+     });
+
+     localStorage.setItem(STORAGE_KEY, currentTimePlay);
+
+     player.setCurrentTime();
+     localStorage.getItem(STORAGE_KEY);
+    ;
+    };
