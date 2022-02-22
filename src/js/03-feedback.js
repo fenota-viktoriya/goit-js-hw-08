@@ -5,30 +5,37 @@ const formRef = document.querySelector('.feedback-form');
 
 const STORAGE_KEY = 'feedback-form-state';
 
-let formData={};
 formRef.addEventListener('input',throttle(onContentInput,500));
 formRef.addEventListener('submit', onFormSubmit);
 
 populateForm();
 
+
 function onContentInput (event){
-    let localStorageValue = localStorage.getItem(STORAGE_KEY);
-    if(!localStorageValue ){localStorage.setItem(STORAGE_KEY,JSON.stringify(formData));}
-    else{formData = JSON.parse(localStorage.getItem(STORAGE_KEY));  
-    formData[event.target.name] = event.target.value;
-    localStorage.setItem(STORAGE_KEY,JSON.stringify(formData))
-//console.log(formData);
-};
+  let formData = localStorage.getItem(STORAGE_KEY);
+  if(!formData ){
+  formData={};
+  formData[event.target.name] = event.target.value;
 }
+  else{
+  formData = JSON.parse(formData);  
+  formData[event.target.name] = event.target.value;}
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(formData))
+
+};
+
+
 
 
 
 function onFormSubmit(event) {
-    event.preventDefault();
-    event.target.reset();
-    localStorage.removeItem(STORAGE_KEY);
-    console.log(formData);
-};
+    event.preventDefault();     
+ validate_form();
+   
+        event.target.reset();
+  }
+
+
 function populateForm(){
  let formData = localStorage.getItem(STORAGE_KEY);
     if (formData) {
@@ -39,4 +46,21 @@ function populateForm(){
       }
 }
 
+
+
+function validate_form ( )
+{
+	 //let valid = true;
+
+        if ( formRef.elements.email.value == "" || formRef.elements.message.value == "" )
+        {
+                alert ( "Пожалуйста заполните поля формы" );
+               // valid = false; return;
+        }
+         else{const valueData =JSON.parse(localStorage.getItem(STORAGE_KEY));
+        
+       console.log(valueData);
+
+      localStorage.removeItem(STORAGE_KEY);}  
+}
 
