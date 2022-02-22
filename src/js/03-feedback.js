@@ -29,8 +29,18 @@ function onContentInput (event){
 
 
 function onFormSubmit(event) {
-    event.preventDefault();     
- validate_form();
+    event.preventDefault(); 
+
+    if ( !formRef.elements.email.value  || !formRef.elements.message.value  )
+    {
+          return alert ( "Пожалуйста заполните поля формы" );
+           
+    }
+     const valueData =JSON.parse(localStorage.getItem(STORAGE_KEY));
+    
+   console.log(valueData);
+
+  localStorage.removeItem(STORAGE_KEY);  
    
         event.target.reset();
   }
@@ -47,20 +57,7 @@ function populateForm(){
 }
 
 
+	 
 
-function validate_form ( )
-{
-	 //let valid = true;
 
-        if ( formRef.elements.email.value == "" || formRef.elements.message.value == "" )
-        {
-                alert ( "Пожалуйста заполните поля формы" );
-               // valid = false; return;
-        }
-         else{const valueData =JSON.parse(localStorage.getItem(STORAGE_KEY));
-        
-       console.log(valueData);
-
-      localStorage.removeItem(STORAGE_KEY);}  
-}
 
